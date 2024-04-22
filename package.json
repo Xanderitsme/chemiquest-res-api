@@ -1,13 +1,28 @@
 {
   "name": "chemiquest-res-api",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
   "scripts": {
-    "dev": "node --watch app.js",
-    "start": "node app.js"
+    "dev": "ts-node-dev ./src/app.ts",
+    "tsc": "tsc",
+    "start": "node ./build/app.js"
   },
+  "author": "DiegoAlessandroMotta",
+  "License": "MIT",
   "keywords": [],
-  "author": "DiegoAlessabdroMotta",
-  "license": "MIT"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Xanderitsme/chemiquest-res-api"
+  },
+  "bugs": {
+    "url": "https://github.com/Xanderitsme/chemiquest-rest-api/issues"
+  },
+  "homepage": "https://github.com/Xanderitsme/chemiquest-rest-api#readme",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.20.2"
+  },
+  "devDependencies": {
+    "ts-node-dev": "2.0.0",
+    "typescript": "5.4.5"
+  }
 }
