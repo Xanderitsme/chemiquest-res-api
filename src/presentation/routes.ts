@@ -1,9 +1,12 @@
 import { Router } from 'express'
 import { AuthRoutes } from './auth/routes'
+import { LoggerMiddleware } from './middlewares/logger.middleware'
 
 export class AppRoutes {
   static get routes () {
     const router = Router()
+
+    router.use(LoggerMiddleware.requests)
 
     router.use('/api/auth', AuthRoutes.routes)
 
