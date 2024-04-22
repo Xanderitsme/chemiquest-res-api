@@ -22,6 +22,7 @@
     "node": ">=18.20.2"
   },
   "devDependencies": {
+    "eslint-config-love": "47.0.0",
     "ts-node-dev": "2.0.0",
     "typescript": "5.4.5"
   }
