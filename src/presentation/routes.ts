@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { AuthRoutes } from './auth/routes'
-import { LoggerMiddleware } from './middlewares/logger.middleware'
+import { LoggerMiddleware } from './middlewares'
 
 export class AppRoutes {
   static get routes () {

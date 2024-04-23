@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { AuthController } from './controller'
-import { AuthRepositoryImpl } from '../../infrastructure/repositories/auth.repository.impl'
-import { AuthDatasourceImpl } from '../../infrastructure/datasources/auth.datasource.impl'
+import { AuthDatasourceImpl } from '../../infrastructure/datasources'
+import { AuthRepositoryImpl } from '../../infrastructure/repositories'
 
 export class AuthRoutes {
   static get routes () {
