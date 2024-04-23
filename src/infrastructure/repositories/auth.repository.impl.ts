@@ -1,9 +1,9 @@
 import { type AuthDatasource } from '../../domain/datasources/auth.datasource'
 import { type RegisterUserDto } from '../../domain/dtos'
 import { type UserEntity } from '../../domain/entities/user.entity'
-import { type authRepository } from '../../domain/repositories/auth.repository'
+import { type AuthRepository } from '../../domain/repositories/auth.repository'
 
-export class AuthRepositoryImpl implements authRepository {
+export class AuthRepositoryImpl implements AuthRepository {
   constructor (
     private readonly authDatasource: AuthDatasource
   ) {}
