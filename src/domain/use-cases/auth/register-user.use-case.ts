@@ -1,8 +1,9 @@
-import { type RegisterUserDto } from '../../dtos/auth/register-user.dto'
+import { type RegisterUserDto } from '../../dtos'
+import { type UserEntity } from '../../entities'
 import { type AuthRepository } from '../../repositories'
 
 interface RegisterUserUseCase {
-  execute: (registerUserDto: RegisterUserDto) => Promise<any>
+  execute: (registerUserDto: RegisterUserDto) => Promise<UserEntity>
 }
 
 export class RegisterUser implements RegisterUserUseCase {
