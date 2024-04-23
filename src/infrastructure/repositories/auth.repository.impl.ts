@@ -1,7 +1,4 @@
-import { type AuthDatasource } from '../../domain/datasources/auth.datasource'
-import { type RegisterUserDto } from '../../domain/dtos'
-import { type UserEntity } from '../../domain/entities/user.entity'
-import { type AuthRepository } from '../../domain/repositories/auth.repository'
+import { type AuthRepository, type AuthDatasource, type RegisterUserDto, type UserEntity } from '../../domain'
 
 export class AuthRepositoryImpl implements AuthRepository {
   constructor (
