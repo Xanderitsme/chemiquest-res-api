@@ -3,11 +3,17 @@ import { UserEntity, type RegisterUserDto } from '../../domain'
 import { CustomError } from '../../domain/errors'
 
 export class AuthDatasourceImpl {
+  private regexCaseInsensitive (value: string) {
+    return new RegExp(['^', value, '$'].join(''), 'i')
+  }
+
   async register (registerUserDto: RegisterUserDto) {
     try {
-      const isEmailAlreadyRegistered = await UserModel.findOne({ email: registerUserDto.email })
-
+      const isEmailAlreadyRegistered = await UserModel.findOne({ email: { $regex: this.regexCaseInsensitive(registerUserDto.email) } })
       if (isEmailAlreadyRegistered !== null) throw CustomError.badRequest('Invalid credentials')
+
+      const isUsernameAlreadyRegistered = await UserModel.findOne({ username: { $regex: this.regexCaseInsensitive(registerUserDto.username) } })
+      if (isUsernameAlreadyRegistered !== null) throw CustomError.badRequest('Invalid credentials')
 
       const user = await UserModel.create(registerUserDto)
 
