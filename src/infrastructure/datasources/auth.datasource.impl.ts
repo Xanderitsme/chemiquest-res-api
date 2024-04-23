@@ -1,18 +1,15 @@
 import { UserModel } from '../../data/mongodb'
 import { UserEntity, type RegisterUserDto } from '../../domain'
+import { CustomError } from '../../domain/errors'
 
 export class AuthDatasourceImpl {
   async register (registerUserDto: RegisterUserDto) {
     try {
       const isEmailAlreadyRegistered = UserModel.find({ email: registerUserDto.email })
 
-      if (isEmailAlreadyRegistered !== null) {
-        throw new Error('Invalid credentials')
-      }
+      if (isEmailAlreadyRegistered !== null) throw CustomError.badRequest('Invalid credentials')
 
-      const user = await UserModel.create({
-        ...registerUserDto
-      })
+      const user = await UserModel.create(registerUserDto)
 
       await user.save()
 
@@ -23,7 +20,8 @@ export class AuthDatasourceImpl {
         password: user.password
       })
     } catch (error) {
-      console.log(error)
+      if (error instanceof CustomError) throw error
+      throw CustomError.internalServer()
     }
   }
 }
