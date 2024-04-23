@@ -5,7 +5,7 @@ import { CustomError } from '../../domain/errors'
 export class AuthDatasourceImpl {
   async register (registerUserDto: RegisterUserDto) {
     try {
-      const isEmailAlreadyRegistered = UserModel.find({ email: registerUserDto.email })
+      const isEmailAlreadyRegistered = await UserModel.findOne({ email: registerUserDto.email })
 
       if (isEmailAlreadyRegistered !== null) throw CustomError.badRequest('Invalid credentials')
 
