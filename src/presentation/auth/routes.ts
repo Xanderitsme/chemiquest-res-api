@@ -13,6 +13,7 @@ export class AuthRoutes {
     const authController = new AuthController(authRepository, JwtAdapter)
 
     router.post('/register', authController.registerUser)
+    router.post('/login', authController.loginUser)
 
     return router
   }
