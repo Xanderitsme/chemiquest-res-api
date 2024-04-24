@@ -1,8 +1,12 @@
 import { UserModel } from '../../data/mongodb'
-import { CustomError, type RegisterUserDto } from '../../domain'
+import { CustomError, type Encryptor, type RegisterUserDto } from '../../domain'
 import { UserMapper } from '../mappers'
 
 export class AuthDatasourceImpl {
+  constructor (
+    private readonly encryptor: Encryptor
+  ) {}
+
   private regExpCaseInsensitive (value: string) {
     return new RegExp(['^', value, '$'].join(''), 'i')
   }
@@ -15,7 +19,12 @@ export class AuthDatasourceImpl {
       const isUsernameAlreadyRegistered = await UserModel.findOne({ username: { $regex: this.regExpCaseInsensitive(registerUserDto.username) } })
       if (isUsernameAlreadyRegistered !== null) throw CustomError.badRequest('Invalid credentials')
 
-      const user = await UserModel.create(registerUserDto)
+      const hashedPassword = await this.encryptor.hash(registerUserDto.password)
+
+      const user = await UserModel.create({
+        ...registerUserDto,
+        password: hashedPassword
+      })
 
       await user.save()
 
