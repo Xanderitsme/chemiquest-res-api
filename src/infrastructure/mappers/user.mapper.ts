@@ -10,7 +10,7 @@ export class UserMapper {
       password
     } = input
 
-    if (_id === undefined || id === undefined) throw CustomError.badRequest('Missing id')
+    if (_id === undefined && id === undefined) throw CustomError.badRequest('Missing id')
     if (username === undefined) throw CustomError.badRequest('Missing username')
     if (email === undefined) throw CustomError.badRequest('Missing email')
     if (password === undefined) throw CustomError.badRequest('Missing password')
