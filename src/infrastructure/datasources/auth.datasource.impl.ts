@@ -1,8 +1,8 @@
 import { UserModel } from '../../data/mongodb'
-import { CustomError, type Encryptor, type RegisterUserDto } from '../../domain'
+import { type AuthDatasource, CustomError, type Encryptor, type RegisterUserDto, type LoginUserDto, type UserEntity } from '../../domain'
 import { UserMapper } from '../mappers'
 
-export class AuthDatasourceImpl {
+export class AuthDatasourceImpl implements AuthDatasource {
   constructor (
     private readonly encryptor: Encryptor
   ) {}
@@ -27,6 +27,28 @@ export class AuthDatasourceImpl {
       })
 
       await user.save()
+
+      return UserMapper.userEntityFromObject(user)
+    } catch (error) {
+      if (error instanceof CustomError) throw error
+      throw CustomError.internalServer()
+    }
+  }
+
+  async login (loginUserDto: LoginUserDto): Promise<UserEntity> {
+    try {
+      const user = await UserModel.findOne({
+        $or: [
+          { username: loginUserDto.usernameEmail },
+          { email: loginUserDto.usernameEmail }
+        ]
+      })
+
+      if (user === null) throw CustomError.badRequest('Missing or incorrect username or password')
+
+      const isMatch = await this.encryptor.compare(loginUserDto.password, user.password)
+
+      if (!isMatch) throw CustomError.badRequest('Missing or incorrect username or password')
 
       return UserMapper.userEntityFromObject(user)
     } catch (error) {
