@@ -44,11 +44,11 @@ export class AuthDatasourceImpl implements AuthDatasource {
         ]
       })
 
-      if (user === null) throw CustomError.badRequest('Missing or incorrect username or password')
+      if (user === null) throw CustomError.badRequest('Incorrect username or password')
 
       const isMatch = await this.encryptor.compare(loginUserDto.password, user.password)
 
-      if (!isMatch) throw CustomError.badRequest('Missing or incorrect username or password')
+      if (!isMatch) throw CustomError.badRequest('Incorrect username or password')
 
       return UserMapper.userEntityFromObject(user)
     } catch (error) {

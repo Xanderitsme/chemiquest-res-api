@@ -23,7 +23,7 @@ export class LoginUserDto {
       typeof password !== 'string' ||
       !Validators.password(password)
     ) {
-      return ['Missing or incorrect username or password', undefined]
+      return ['Incorrect username or password', undefined]
     }
 
     return [
