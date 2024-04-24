@@ -1,12 +1,11 @@
 import { type Request, type Response } from 'express'
-import { RegisterUserDto } from '../../domain/dtos'
+import { type AuthRepository, CustomError, type TokenAuthenticator, RegisterUserDto } from '../../domain'
 import { RegisterUser } from '../../domain/use-cases'
-import { type AuthRepository } from '../../domain/repositories'
-import { CustomError } from '../../domain/errors'
 
 export class AuthController {
   constructor (
-    private readonly authRepository: AuthRepository
+    private readonly authRepository: AuthRepository,
+    private readonly tokenAuthenticator: TokenAuthenticator
   ) {}
 
   private readonly handleError = (error: any, res: Response) => {
@@ -26,7 +25,7 @@ export class AuthController {
       return
     }
 
-    const registerUser = new RegisterUser(this.authRepository)
+    const registerUser = new RegisterUser(this.authRepository, this.tokenAuthenticator)
 
     registerUser.execute(registerUserDto)
       .then(user => res.status(200).json(user))
