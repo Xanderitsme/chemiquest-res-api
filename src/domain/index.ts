@@ -1,5 +1,6 @@
-export * from './entities/user.entity'
+export * from './entities'
 export * from './dtos'
 export * from './errors'
 export * from './datasources'
 export * from './repositories'
+export * from './interfaces'
