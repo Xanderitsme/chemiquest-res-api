@@ -28,7 +28,7 @@ export class AuthController {
     const registerUser = new RegisterUser(this.authRepository, this.tokenAuthenticator)
 
     registerUser.execute(registerUserDto)
-      .then(user => res.status(200).json(user))
+      .then(userToken => res.status(200).json(userToken))
       .catch(error => { this.handleError(error, res) })
   }
 }
