@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
+import { envs } from './envs'
 
-const JWT_SEED = 'random_seed'
+const JWT_SEED = envs.JWT_SEED
 
 export class JwtAdapter {
   static async generateToken (payload: object, duration: string = '2h'): Promise<string | null> {
