@@ -1,11 +1,12 @@
-import { compareSync, hashSync } from 'bcryptjs'
+import bcrypt from 'bcrypt'
 
 export class BcryptAdapter {
   static async hash (password: string) {
-    return hashSync(password)
+    const salt = await bcrypt.genSalt(12)
+    return bcrypt.hash(password, salt)
   }
 
   static async compare (password: string, hash: string) {
-    return compareSync(password, hash)
+    return bcrypt.compare(password, hash)
   }
 }
