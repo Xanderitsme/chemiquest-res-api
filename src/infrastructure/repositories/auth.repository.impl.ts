@@ -1,4 +1,4 @@
-import { type AuthRepository, type AuthDatasource, type RegisterUserDto, type UserEntity } from '../../domain'
+import { type AuthRepository, type AuthDatasource, type RegisterUserDto, type UserEntity, type LoginUserDto } from '../../domain'
 
 export class AuthRepositoryImpl implements AuthRepository {
   constructor (
@@ -7,5 +7,9 @@ export class AuthRepositoryImpl implements AuthRepository {
 
   async register (registerUserDto: RegisterUserDto): Promise<UserEntity> {
     return await this.authDatasource.register(registerUserDto)
+  }
+
+  async login (loginUserDto: LoginUserDto): Promise<UserEntity> {
+    return await this.authDatasource.login(loginUserDto)
   }
 }
